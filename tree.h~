@@ -26,6 +26,7 @@
 #endif
 
 typedef struct TreeNode {
+    int freq;
     char *term;
     Node *dictionary;
     struct TreeNode *right;
@@ -53,7 +54,7 @@ void freeTreeNode (TreeNode *node);
     @return 1 : successful
     @return 0 : failure
 ***/
-int insertTreeNode(TreeNode *tree, TreeNode *node);
+int addTerm (TreeNode *tree, char *term, char *docId);
 
 /***
     Prints a tree node including left and right terms
@@ -67,6 +68,12 @@ int printTreeNode (TreeNode *node);
     @return 1 : successful print
 ***/
 int printTree (TreeNode *tree);
+
+/***
+    Count the number of nodes in the tree
+    @return >0 : number of nodes in the tree
+***/
+int countTreeNodes (TreeNode *tree);
 
 /***
     Search the tree for a term

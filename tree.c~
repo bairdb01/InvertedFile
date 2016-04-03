@@ -16,6 +16,7 @@
 
 TreeNode *initTreeNode (char *term, char *docId) {
     TreeNode *node = malloc(sizeof(TreeNode));
+    node->freq = 1;
     node->term = malloc(sizeof(char)*((int)strlen(term)+1));
     node->term = strcpy(node->term, term);
     node->dictionary = initNode(docId);
@@ -47,7 +48,7 @@ int addTerm (TreeNode *tree, char *term, char *docId) {
 
     // Check if term exists already
     if (treeNode == NULL) {
-        // Term doesn't exist, create add it to the tree
+        // Term doesn't exist, create and add it to the tree
         TreeNode *temp = tree;
         while (1) {
             if (strcmp(term, temp->term) < 0) {
@@ -74,6 +75,7 @@ int addTerm (TreeNode *tree, char *term, char *docId) {
         
     } else {
         // Check if term exists in document, increment term frequency in relevant document
+        treeNode->freq++;
         Node *node = searchNodes( treeNode->dictionary, docId );
         if (node == NULL) {
             // Create a node for the document
@@ -95,6 +97,7 @@ int printTreeNode(TreeNode *node) {
     }
     printf("~~~~~~~~~~~~~~~~~~~\n");
     printf("TreeNode Term: %s\n", node->term);
+    printf("Term Frequency: %d\n", node->freq);
     printNodeList(node->dictionary);
     if (node->left != NULL)
         printf("Left Child: %s\n", node->left->term);
@@ -138,6 +141,27 @@ TreeNode *searchTree(TreeNode *tree, char *term) {
     return NULL;
 }
 
+int countTreeNodes (TreeNode *tree) {
+    if (tree == NULL)
+        return 0;
+        
+    int numNodes = 0;
+    int retVal = 0;
+    // Left Side
+    while (tree->left != NULL && retVal == 0)    
+        retVal = countTreeNodes(tree->left);
+    numNodes += retVal;
+    
+    // Itself    
+    numNodes++;
+    retVal = 0;
+
+    // Right Side
+    while (tree->right != NULL && retVal == 0) 
+        retVal = countTreeNodes(tree->right);
+    numNodes += retVal;
+    return numNodes;
+}
 /*// Test*/
 /*int main () {*/
 /*    printf("Testing Begins\n");*/
