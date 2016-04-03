@@ -53,7 +53,7 @@ void freeTreeNode (TreeNode *node);
     @return 1 : successful
     @return 0 : failure
 ***/
-int insertTreeNode (TreeNode *tree, TreeNode *node);
+int addTerm (TreeNode *tree, char *term, char *docId);
 
 /***
     Prints a tree node including left and right terms

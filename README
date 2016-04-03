@@ -1,1 +1,22 @@
-Implementation of the Inverted File data structure in C.
+Implementation of the Inverted File data structure in C using Binary Search Tree and Linked List. Two available modes: Online and offline.
+
+Offline: Build the database of keywords from the datafiles and create the dictionary, posting, and docids files.
+
+                - dictionary.txt: contains all terms in the binary search tree
+                                  along with the number of documents in which they occur.
+                                  Sorted alphabetically.
+                    <total number of terms>
+                    <term1> <document-frequency1>
+                    <term2> <document-frequency2>
+                      
+                - postings.txt: contains the document's id and it's term frequency
+                    <total number of entries>
+                    <docno1> <term-frequency1>
+                    <docno2> <term-frequency2>
+                    
+                - docids.txt: docid's with their starting positions from the input file
+                    <total number of documents>
+                    <docid1> <start-position1>
+                    <docid2> <start-position2>
+
+Online: Use the created files with a query to find relevant documents.

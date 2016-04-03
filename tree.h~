@@ -1,5 +1,7 @@
 /***
-    Header file for tree.c
+    Filename: tree.h
+    Author: Benjamin Baird
+    Description: Header file for tree.c, a binary tree
 ***/
 
 #ifndef STDIO_H_INCLUDED
@@ -51,7 +53,7 @@ void freeTreeNode (TreeNode *node);
     @return 1 : successful
     @return 0 : failure
 ***/
-int insertTreeNode (TreeNode *tree, TreeNode *node);
+int insertTreeNode(TreeNode *tree, TreeNode *node);
 
 /***
     Prints a tree node including left and right terms

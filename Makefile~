@@ -1,10 +1,20 @@
-HEADERS = list.h tree.h
+CC = gcc
+CFLAGS = -Wall  -g
 
 default: offline
 
-offline: invertedFileOffline.c tree.c list.c $(HEADERS)
-	gcc -o bairdb_a4_off.out list.c tree.c invertedFileOffline.c
 
+offline: invertedFileOffline.c list.o tree.o
+	$(CC) list.o tree.o invertedFileOffline.c $(CFLAGS) -o bairdb_a4_off.out
+
+tree.o: list.h tree.c tree.h list.c
+	$(CC) -c tree.c 
+
+list.o: list.c list.h
+	$(CC) -c list.c
+	
 #online: invertedFileOnline.c 
-#	gcc -o bairdb_a4_on.out
+#	$(CC) -o bairdb_a4_on.out
 
+clean:
+	rm *.o

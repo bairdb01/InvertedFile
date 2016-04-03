@@ -132,7 +132,7 @@ TreeNode *searchTree(TreeNode *tree, char *term) {
     return NULL;
 }
 
-// Test
+/*// Test*/
 /*int main () {*/
 /*    printf("Testing Begins\n");*/
 /*    TreeNode *tree = initTreeNode("hey\0", "doc1");*/
