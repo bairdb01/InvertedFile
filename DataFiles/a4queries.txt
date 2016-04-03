@@ -1,0 +1,350 @@
+$QRY 301
+$TITLE
+international organized crime
+$DESC
+identify organizations participate international criminal activity activity collaborating organizations countries involved
+$NARR
+relevant document minimum identify organization type illegal activity columbian cartel exporting cocaine vague references international drug trade identification organization involved relevant
+$QRY 302
+$TITLE
+poliomyelitis post-polio
+$DESC
+disease poliomyelitis polio control world
+$NARR
+relevant documents data outbreaks polio disease large small scale medical protection disease reports labeled post-polio problems interest location cases severe post-polio area
+$QRY 303
+$TITLE
+hubble telescope achievements
+$DESC
+identify positive accomplishments hubble telescope launched
+$NARR
+documents relevant show hubble telescope produced data quality data previously data increased human knowledge universe data led disproving previously existing theories hypotheses documents limited shortcomings telescope irrelevant details repairs modifications telescope reference positive achievements relevant
+$QRY 304
+$TITLE
+endangered species mammals
+$DESC
+compile list mammals considered endangered identify habitat threatens
+$NARR
+document identifying mammal endangered relevant statements authorities disputing endangered status relevant document information habitat populations mammal identified endangered relevant document hand identify species endangered generalized statements endangered species reference specific mammals relevant
+$QRY 305
+$TITLE
+dangerous vehicles
+$DESC
+crashworthy crashworthy passenger vehicles
+$NARR
+relevant document information crashworthiness vehicle vehicles draw comparison vehicles document describe compare vehicles drivers instance expected vehicles preferred year-olds involved crashes age group involved crashes view number fatalities crashes revealing vehicle's crashworthiness number crashes miles
+$QRY 306
+$TITLE
+african civilian deaths
+$DESC
+civilian non-combatants killed civil wars africa
+$NARR
+relevant document specific casualty information area country region cite numbers civilian deaths caused directly indirectly armed conflict
+$QRY 307
+$TITLE
+hydroelectric projects
+$DESC
+identify hydroelectric projects proposed construction country location detailed description nature extent purpose problems consequences desirable
+$NARR
+relevant documents minimum clear statement hydroelectric project planned construction location project renovation existing facilities judged relevant plans call significant increase acre-feet reservoir marked change environmental impact project arguments proposed projects relevant long supported specifics including minimum location project statement individual organization projects general relevant proposals projects underway dismantle existing facilities drain existing reservoirs relevant articles reporting decision drop proposed plan
+$QRY 308
+$TITLE
+implant dentistry
+$DESC
+advantages disadvantages tooth implants
+$NARR
+tooth replacement procedure begun 1960s doctor branemark widely today involves replacement lost tooth teeth implantation process secures fabricated tooth titanium post adhesive resulting stable sturdy denture original relevant document include clinical experiment report study paper medical discussion describes advantages disadvantages tooth implant conditions procedure favorable denture comfort function compared false teeth bridge plate comparative cost differential
+$QRY 309
+$TITLE
+rap crime
+$DESC
+evidence rap music negative effect young people
+$NARR
+lyrics rap music replete words degrade women glorify drug abuse killing policemen romanticize suicide crusade begun years ago music industry asked clean act detrimental effect teenagers instances teenagers demonstrated sign internal strife committed suicide clues self-destruction notes found bodies lyrics rap songs relating suicide relevant item include psychological study evidence poll documentation psychological opinion rap music deleterious effect young people led discernible change personality life style crime alteration personality negative effect psyche mores culture teenagers
+$QRY 310
+$TITLE
+radio waves brain cancer
+$DESC
+evidence radio waves radio towers car phones affect brain cancer occurrence
+$NARR
+persons living radio towers recently persons car phones diagnosed brain cancer argument rages direct association incidence cancer groups cited considered higher found normal population relevant document includes experiment animals statistical study articles news items report incidence brain cancer higher lower persons live radio tower car phones compared general population
+$QRY 311
+$TITLE
+industrial espionage
+$DESC
+document discuss theft trade secrets sources information trade journals business meetings data patent offices trade shows analysis competitor's products
+$NARR
+relevant document specific information theft trade secrets existing technology relevant information includes limited espionage highly competitive fashion industry toy companies drug firms computer companies apparently legal stealing company secrets freedom information act passed congress people press information public good law companies private gain documents discussing company counterespionage considered relevant
+$QRY 312
+$TITLE
+hydroponics
+$DESC
+document discuss science growing plants water substance soil
+$NARR
+relevant document specific information nutrients experiments types substrates pertinent facts related science hydroponics related information includes limited history hydroponics advantages standard soil agricultural practices approach suspending roots humid enclosure spraying periodically nutrient solution promote plant growth
+$QRY 313
+$TITLE
+magnetic levitation-maglev
+$DESC
+commercial magnetic levitation
+$NARR
+relevant document magnetic levitation maglev concerned commercial applications phenomenon include primarily mass transit commercial applications maglev flywheels cars discussions superconductivity linked maglev government support plans linked maglev relevant
+$QRY 314
+$TITLE
+marine vegetation
+$DESC
+commercial harvesting marine vegetation algae seaweed kelp food drug purposes
+$NARR
+recent research shown marine vegetation valuable source food human animal potentially drug search focus primarily considered relevant instances commercial fertilizer
+$QRY 315
+$TITLE
+unexplained highway accidents
+$DESC
+fatal highway accidents year resolved
+$NARR
+relevant document data relating highway accidents accident determined typical accidents vehicle suddenly swerves oncoming traffic
+$QRY 316
+$TITLE
+polygamy polyandry polygyny
+$DESC
+roots prevalence polygamy world today
+$NARR
+polygamy form marriage permits person husband wife polyandry refers woman sharing husbands time polygyny refers man sharing wives time primary focus search prevalence practices world today societal attitudes practices relevant discussions roots practical sources customs modern development area serial polygamy phrase coined label practice men series wives sequence solution practical welfare considerations child care housing documents discussing serial polygamy considered relevant
+$QRY 317
+$TITLE
+unsolicited faxes
+$DESC
+regulations passed fcc banning junk facsimile fax effective
+$NARR
+relevant documents provide information cost junk fax transmitted individuals businesses documents laws regulations passed banning junk fax articles indicating effectiveness ineffectiveness laws relevant additionally document showing unsolicited junk fax invasion privacy relevant
+$QRY 318
+$TITLE
+retirement country
+$DESC
+united states country offers living conditions quality life retiree
+$NARR
+relevant document information describing living conditions costs foreign countries provide information potential retiree deciding establish retirement home
+$QRY 319
+$TITLE
+fuel sources
+$DESC
+research ongoing fuel sources
+$NARR
+relevant documents information actual research accomplished fuel sources documents reveal company companies involved research listing fuel sources relevance relevant documents show current fuel sources articles simply refer current sources relevant documents nuclear power relevant discuss developments nuclear field processing spent fuel establish nuclear fuel system
+$QRY 320
+$TITLE
+undersea fiber optic cable
+$DESC
+fiber optic link globe flag world's longest undersea fiber optic cable involved extensive technology system problems exist
+$NARR
+relevant documents reference companies involved building system technology needed endeavor relevance information link points flag landing sites interconnection telecommunication cables relevant documents reference regulatory problems system constructed non-relevant document information fiber optic systems place
+$QRY 321
+$TITLE
+women parliaments
+$DESC
+pertinent documents reflect fact women continue poorly represented parliaments world gap political power sexes wide world
+$NARR
+pertinent documents relating issue discuss lack representation women countries mandate inclusion percentage women legislatures decreases female representation legislatures countries representation women
+$QRY 322
+$TITLE
+international art crime
+$DESC
+isolate instances fraud embezzlement international art trade
+$NARR
+relevant document report identifies instance fraud embezzlement international buying selling art objects objects include paintings jewelry sculptures valuable works art specific instances identified document relevant generalities relevant
+$QRY 323
+$TITLE
+literary journalistic plagiarism
+$DESC
+find instances plagiarism literary journalistic worlds
+$NARR
+relevant document report occasion suspected instance plagiarism areas literature journalism relevant documents include areas doctorate master's theses encompass writings ideas concepts developed authors borrowed attribution
+$QRY 324
+$TITLE
+argentine british relations
+$DESC
+define argentine british international relations
+$NARR
+years war argentina united kingdom sovereignty falkland islands relevant report describe relations period kind international contact countries relevant include commercial economic cultural diplomatic military exchanges negative reports absence exchanges desirable reports information direct exchanges argentina falkland islands relevant
+$QRY 325
+$TITLE
+cult lifestyles
+$DESC
+describe cult identify cult members activities everyday life
+$NARR
+relevant document include cult offer information members lifestyles include dress attain ultimate goal organization relevant document eat contribute cult mention existence cult clarifying information relevant
+$QRY 326
+$TITLE
+ferry sinkings
+$DESC
+report ferry sinking people lost lives
+$NARR
+relevant document identify ferry sunk causing death humans identify ferry place sinking occurred details sinking helpful relevant reference ferry sinking number deaths relevant
+$QRY 327
+$TITLE
+modern slavery
+$DESC
+identify country city evidence human slavery practiced eighties nineties
+$NARR
+relevant document present evidence current slavery practices carried identify specific country city give information slaves buying selling purposes references slavery carried years ago relevant
+$QRY 328
+$TITLE
+pope beatifications
+$DESC
+identify individual beatified pope
+$NARR
+relevant document include person's person's deeds actions led recognition pope include actions deeds occurred giving year period time late 17th century
+$QRY 329
+$TITLE
+mexican air pollution
+$DESC
+mexico city worst air pollution world pertinent documents specific steps mexican authorities combat deplorable situation
+$NARR
+relevant documents discuss steps mexican government alleviate air pollution mexico city steps reducing number automobiles city encouraging mass public transportation creating mass transportation systems relevant mention methods design stage
+$QRY 330
+$TITLE
+iran-iraq cooperation
+$DESC
+query examples cooperation friendly ties iran iraq ways countries considered allies
+$NARR
+relevant document mention things mutually beneficial economic military religious social relations cooperation border control treatment minorities collaboration trade sanctions country mention return airplanes iraq flew iran gulf war relevant
+$QRY 331
+$TITLE
+world bank criticism
+$DESC
+criticisms made world bank policies activities personnel
+$NARR
+query instances world bank accused things responsive unique problems individual countries strict policies pursuing agendas biased benefits western countries longer practical personnel difficult work
+$QRY 332
+$TITLE
+income tax evasion
+$DESC
+query investigations targeted evaders income tax
+$NARR
+relevant document mention investigations abroad people suspected evading income tax laws interest investigations involving revenue illegal activities strategy bring suspected criminals justice
+$QRY 333
+$TITLE
+antibiotics bacteria disease
+$DESC
+determine reasons bacteria winning war antibiotics rendering antibiotics effective treating diseases past
+$NARR
+relevant document address questions degree bacteria fend curative effects antibiotics overuse antibiotics increasing antibiotics promoting growth crops animals food products meant human consumption played roles creating situation bacteria-generated disease versions resist antibiotics
+$QRY 334
+$TITLE
+export controls cryptography
+$DESC
+determine usefulness effectiveness continuing maintain export controls encryption software
+$NARR
+relevant documents argue continuing make encryption software subject export controls quality encryption software ensure secrecy communications government considered software subject export controls munitions sought restrict export encryption software device read underlying messages business interests make impossible producers compete international market
+$QRY 335
+$TITLE
+adoptive biological parents
+$DESC
+identify problems solutions problems arise relationships biological parents adoptive parents child children involved
+$NARR
+relevant document report court procedures decisions affect rights biological parents adoptive parents adopted child problems arise biological parents child adoption decide reclaim child wishes adoptive parents problems arise adopted child identify contact biological parents find blocked sealed court orders
+$QRY 336
+$TITLE
+black bear attacks
+$DESC
+relevant document discuss frequency vicious black bear attacks worldwide savage behavior
+$NARR
+reported food cosmetics attract hungry black bears causing viciously attack humans relevant documents include aforementioned speculation preferably scientific community vicious attacks black bears relevant document detail steps methods devised wildlife officials control modify savageness black bear
+$QRY 337
+$TITLE
+viral hepatitis
+$DESC
+research viral hepatitis progress made treatment
+$NARR
+relevant document include information medical procedure treatment hepatitis ongoing research vaccines including identity strain hepatitis hepatitis affects body's immune system world countries reports control disease
+$QRY 338
+$TITLE
+risk aspirin
+$DESC
+adverse effects people experienced taking aspirin repeatedly
+$NARR
+relevant document identify adverse effects experienced repeated aspirin effects include intestinal bleeding inflammation stomach forms ulcers purpose individual's repeated aspirin stated
+$QRY 339
+$TITLE
+alzheimer's drug treatment
+$DESC
+drugs treatment alzheimer's disease successful
+$NARR
+relevant document drug treatment alzheimer's disease manufacturer give indication drug's success failure
+$QRY 340
+$TITLE
+land mine ban
+$DESC
+identify actions propel nations world treaty banning production transfer land mines
+$NARR
+brought conflicts estimated million land mines buried countries thousands acres land made unusable estimated minutes man woman child killed maimed land mine identify actions propel nations world treaty banning production transfer land mines interest identification actions undertaken sanitize thousands acres made unusable due mines
+$QRY 341
+$TITLE
+airport security
+$DESC
+relevant document discuss effective government orders scrutinize passengers luggage international flights step screening carry-on baggage
+$NARR
+relevant document reports steps airports worldwide scrutinize passengers luggage international flights step screening carry-on baggage increase international terrorism wake twa flight disaster articles airport security relating additional steps airports increase flight safety relevant mere mention enhanced security constitute relevance additional steps refer passenger carry-on screening normal methods examples steps additional personnel sophisticated monitoring screening devices extraordinary measures check luggage baggage compartment
+$QRY 342
+$TITLE
+diplomatic expulsion
+$DESC
+end cold war intensified economic competition started generate friction nations attempts made diplomatic personnel acquire sensitive trade technology information obtain information highly classified industrial projects identify instances attempts made personnel diplomatic status obtain information nature
+$NARR
+identify instances attempts made personnel diplomatic status obtain information nature interest country involved information acquired exposure resulted expulsion diplomatic personnel
+$QRY 343
+$TITLE
+police deaths
+$DESC
+identify instances civilian policeman killed performance duty association occupation killed gun testifying
+$NARR
+reason breakdown family values loss respect authoritative figure substantial increase number policemen killed identify instances civilian policeman killed performance duty association occupation killed gun testifying military police foreign military-type personnel considered policemen considered relevant
+$QRY 344
+$TITLE
+abuses e-mail
+$DESC
+availability e-mail people job school affiliation allowed efficiencies communications provided opportunity abuses steps world-wide bearing cost e-mail prevent excesses
+$NARR
+relevant document concern dissatisfaction entity paying cost electronic mail sought items relate system users employees abuse system engaging communications type related payer's desired system
+$QRY 345
+$TITLE
+overseas tobacco sales
+$DESC
+health studies primarily caused reductions tobacco sales economic impact caused tobacco companies overseas customers impact health economic factors overseas
+$NARR
+relevant item discuss increase decrease sales tobacco products overseas attribute health findings aggressive marketing companies foreign companies cooperate
+$QRY 346
+$TITLE
+educational standards
+$DESC
+long call standards education calls frequently citing superiority foreign school systems countries standards pre-teen students countries standards set
+$NARR
+relevant item foreign country adopted standards children age specifically give detail standards computer training years foreign language
+$QRY 347
+$TITLE
+wildlife extinction
+$DESC
+spotted owl episode america highlighted efforts prevent extinction wildlife species effort countries prevent demise species native countries countries begun efforts prevent declines
+$NARR
+relevant item country involved species steps save species
+$QRY 348
+$TITLE
+agoraphobia
+$DESC
+fear open public places agoraphobia widespread disorder unknown
+$NARR
+relevant documents data physical mental disorder including information person affected profession individual impact life work individual data individuals cope disorder
+$QRY 349
+$TITLE
+metabolism
+$DESC
+document discuss chemical reactions living cells healthy producing energy
+$NARR
+relevant document specific information catabolic anabolic reactions metabolic process relevant information includes limited reactions occurring metabolism biochemical processes glycolysis krebs cycle production energy disorders metabolic rate
+$QRY 350
+$TITLE
+health computer terminals
+$DESC
+hazardous health individuals work computer terminals daily basis
+$NARR
+relevant documents information expands physical disorder problems daily working computer terminals things carpel tunnel cataracts fatigue widespread problems alleviate health problems
