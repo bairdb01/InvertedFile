@@ -106,12 +106,18 @@ int printTreeNode(TreeNode *node) {
 
 int printTree (TreeNode *tree) {
     int retVal = 0;
+    // Left Side
     while (tree->left != NULL && retVal == 0)    
         retVal = printTree(tree->left);
+    
+    // Itself    
+    printTreeNode(tree);
     retVal = 0;
+
+    // Right Side
     while (tree->right != NULL && retVal == 0) 
         retVal = printTree(tree->right);
-    printTreeNode(tree);
+    
     return 1;
 }
 
