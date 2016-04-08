@@ -1,7 +1,0 @@
-6
-angeles 1
-los 1
-new 2
-post 1
-times 2
-york 2

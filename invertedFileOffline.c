@@ -321,6 +321,7 @@ int main (int argc, char *argv[]){
                 free(docs);  
             }
             numTerms = processDocs(&termTree, docs, filename);
+            free(filename);
             if ( numTerms == -1) {
                 printf("Error processing files.\n");
                 return 1;
