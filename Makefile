@@ -27,6 +27,9 @@ reset:
 	rm dictionary.txt
 	rm postings.txt
 	rm docids.txt
+	rm dictiionary.txt~
+	rm postings.txt~
+	rm docids.txt~
 
 # Clean up created object files
 clean:
