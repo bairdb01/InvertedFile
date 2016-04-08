@@ -338,9 +338,6 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs) {
                 } else {
                     if (docFound) {
                         title = strcpy(title, "<No Title>\0");
-                        free(buffer);
-                        free(docId);
-                        fclose(fp);
                         return title;
                     }
                 }

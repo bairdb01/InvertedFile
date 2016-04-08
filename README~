@@ -1,6 +1,6 @@
 Implementation of the Inverted File data structure in C using Binary Search Tree and Linked List. Two available modes: Online and offline.
 
-Offline: Build a database of keywords from the datafiles and create the dictionary, posting, and docids files.
+Offline: Build the database of keywords from the datafiles and create the dictionary, posting, and docids files.
 
                 - dictionary.txt: contains all terms in the binary search tree
                                   along with the number of documents in which they occur.

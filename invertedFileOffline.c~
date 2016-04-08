@@ -2,7 +2,7 @@
 Filename: invertedFileOffline.c
 Author: Benjamin Baird
 Date Created: April 2, 2016
-Last Updated: April 2, 2016
+Last Updated: April 8, 2016
 Description: Implements the inverted file data structure to be used "Offline".
              Creates 3 files based on the given input file.
                 - dictionary.txt: contains all terms in the binary search tree
@@ -21,6 +21,7 @@ Description: Implements the inverted file data structure to be used "Offline".
                     <total number of documents>
                     <docid1> <start-position1>
                     <docid2> <start-position2>
+Tested: 0 memory leaks or errors                    
 */
 
 #ifndef STDIO_H_INCLUDED
@@ -85,8 +86,14 @@ int genDictionary ( FILE *fp, TreeNode *termTree ) {
     while (termTree->left != NULL && retVal == 0)    
         retVal = genDictionary(fp, termTree->left);
     
-    // Itself    
-    fprintf(fp,"%s %d\n", termTree->term, termTree->freq);
+    // Itself
+    int df = 0;  
+    Node *temp = termTree->dictionary;
+    while (temp != NULL) {
+        df++;
+        temp = temp->next;
+    }
+    fprintf(fp,"%s %d\n", termTree->term, df);
     retVal = 0;
 
     // Right Side
@@ -101,94 +108,94 @@ int genDictionary ( FILE *fp, TreeNode *termTree ) {
     @call fp : pointer to file that is to be read
     @return >0 : number of terms read
 ****/
-int processDocs(TreeNode **termTree, DocNode **docs){
+int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
     int metaTags = 0;
     int numTerms = 0;
     char *docId = malloc(sizeof(char)*200);
-/*    char filename[28] = "DataFiles/a4documents.txt_\0\0";*/
-    char filename[28] = "DataFiles/test\0\0";
     int docCount = 0;
-    // Loop through the 5 a4documents.txt_#
-    for (int i = 1; i < 3;i++) { //Change 3 to 6 when testing real data
-/*        filename[26] = i + 48;*/
-        filename[14] = i + 48;
-        FILE *fp = fopen(filename, "r");
-        if (fp == NULL) {
-            free(docId);
-            return -1;
+    int docLine = 0;
+    
+    // Load file to process
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        free(docId);
+        return -1;
+    }
+    int lineNum = 0;
+    
+    // Grab the first word in the file
+    char *buffer = malloc(sizeof(char)*200);
+    char letter [2] = "\0\0";
+    buffer = strcpy(buffer,"\0");
+    letter[0] = fgetc(fp);
+    while ((letter[0] != ' ') && (letter[0] != '\n')){
+        if (letter[0] == EOF) {
+            free(buffer);
+            buffer = NULL;
+            break;
         }
-        int lineNum = 0;
+        buffer = strcat(buffer, letter);
+        letter[0] = fgetc(fp);
+    }
+    
+    // Read words from file based on the space deliminator
+    while (buffer != NULL) {
+        printf("%d|%s|%s\n", metaTags, buffer, docId);
+        if (strncmp(buffer, "$", 1) == 0) {
+                if (strcmp(buffer, "$DOC") == 0) {
+                    metaTags = 1;
+                } else {
+                    // $TITLE or $BODY
+                    metaTags++;
+                }
+        } else if (metaTags == 1) {
+            // Load docid
+            docId = strcpy(docId, buffer);
+            docLine = lineNum;
+        } else if (metaTags > 1) {
+            // Update the tree
+            if ((*termTree) != NULL) {
+                if (addTerm ((*termTree), buffer, docId) == 0) {
+                    // Error adding term
+                    free(buffer);
+                    free(docId);
+                    fclose(fp);
+                    return -1;
+                }
+            } else {
+                (*termTree) = initTreeNode(buffer, docId);
+            }
+            
+            // Making sure document is not empty
+            if (metaTags == 2) {
+                freeDocNode(docs[docCount]); // Free the temp node
+                docs[docCount] = initDocNode(docId, docLine);
+                docCount++;
+                metaTags++;
+            }
+            numTerms++;
+        }
         
-        // Grab the first word in the file
-        char *buffer = malloc(sizeof(char)*200);
-        char letter [2] = "\0\0";
+        // Found a newline
+        if (letter[0] == '\n') 
+            lineNum++;
+            
+        // Grab next word
         buffer = strcpy(buffer,"\0");
         letter[0] = fgetc(fp);
         while ((letter[0] != ' ') && (letter[0] != '\n')){
-                if (letter[0] == EOF) {
-                    free(buffer);
-                    buffer = NULL;
-                    break;
-                }
-                buffer = strcat(buffer, letter);
-                letter[0] = fgetc(fp);
+            if (letter[0] == EOF) {
+                free(buffer);
+                buffer = NULL;
+                break;
             }
-        
-        // Read words from file based on the space deliminator
-        while (buffer != NULL) {
-/*            printf("%d|%s|%s\n", metaTags, buffer, docId);*/
-            if (strncmp(buffer, "$", 1) == 0) {
-                    if (strcmp(buffer, "$DOC") == 0) 
-                        metaTags = 1;
-                    else 
-                        // $TITLE or $BODY
-                        metaTags = 2;
-                    
-            } else if (metaTags == 1) {
-                    // Load docid
-                    docId = strcpy(docId, buffer);
-                    // Move this somewhere to check that doc contains terms
-                    printf("File: %d | B: %s\n", i, buffer);
-                    freeDocNode(docs[docCount]); // Free the temp node
-                    docs[docCount] = initDocNode(buffer, lineNum);
-                    docCount++;
-            } else {
-                // Update the tree
-                if ((*termTree) != NULL) {
-                    if (addTerm ((*termTree), buffer, docId) == 0) {
-                        // Error adding term
-                        free(buffer);
-                        free(docId);
-                        fclose(fp);
-                        return -1;
-                    }
-                } else {
-                    (*termTree) = initTreeNode(buffer, docId);
-                }
-                numTerms++;
-            }
-            // Found a newline
-            if (letter[0] == '\n') 
-                lineNum++;
-                
-            // Grab next word
-            buffer = strcpy(buffer,"\0");
+            buffer = strcat(buffer, letter);
             letter[0] = fgetc(fp);
-            while ((letter[0] != ' ') && (letter[0] != '\n')){
-                if (letter[0] == EOF) {
-                    free(buffer);
-                    buffer = NULL;
-                    break;
-                }
-                buffer = strcat(buffer, letter);
-                letter[0] = fgetc(fp);
-            }
-            
         }
-        fclose(fp);
+        
     }
     
-
+    fclose(fp);
     free(docId);
     return numTerms;
 }
@@ -273,25 +280,47 @@ int main (int argc, char *argv[]){
         printf("What would you like to do?\n \
                 1 - Process datafiles\n \
                 2 - Print Current Tree Alphabetically\n \
-                3 - Print Current Array\n \
+                3 - Print Document Index\n \
                 q - Quit\n");
-        scanf("%s", buffer);
+        int ret = scanf("%s", buffer);
+        if (ret == 0) {
+            free(buffer);
+            for (int i = 100000-1; i >= 0; i--) {
+                freeDocNode(docs[i]);
+            }
+            free(docs);
+            return 1;
+        }
+        
         if (strcmp(buffer, "q") == 0){
             break;
+            
         } else if (strcmp(buffer, "2") == 0) {
             if (termTree == NULL) {
                 printf("Tree is empty\n");
                 continue;
             }
             printTree(termTree);
+            
         } else if (strcmp(buffer, "3") == 0) {
             for (int i = 0; i < 100000; i++) {
                 if (docs[i]->start != -1)
                     printf("DocNo: %s | LineNumber: %d\n", docs[i]->docId, docs[i]->start);
             }
             continue;
-        } else {
-            numTerms = processDocs(&termTree, docs);
+            
+        } else if (strcmp(buffer, "1") == 0){
+            printf("Enter the filename of file to process...\n");
+            char *filename = malloc(sizeof(char)*500);
+            if (scanf("%s", filename) == 0) {
+                free(filename);
+                free(buffer); 
+                for (int i = 100000-1; i >= 0; i--) {
+                    freeDocNode(docs[i]);
+                }
+                free(docs);  
+            }
+            numTerms = processDocs(&termTree, docs, filename);
             if ( numTerms == -1) {
                 printf("Error processing files.\n");
                 return 1;

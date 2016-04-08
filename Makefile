@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -std=c99 -g
+CFLAGS = -Wall -std=c99 -O3 -g
 
-default: offline
+default: offline online
 
 # Merge binary tree and linked list objects with invertedFile
 offline: invertedFileOffline.c list.o tree.o
@@ -15,8 +15,12 @@ tree.o: list.h tree.c tree.h list.c
 list.o: list.c list.h
 	$(CC) $(CFLAGS) -c list.c
 
-#online: invertedFileOnline.c 
-#	$(CC) $(CFLAGS) -o bairdb_a4_on.out
+# Compile the online portion
+online: invertedFileOnline.c indexes.o
+	$(CC) $(CFLAGS) invertedFileOnline.c indexes.o -o bairdb_a4_on.out -lm
+	
+indexes.o: indexes.c indexes.h
+	$(CC) $(CFLAGS) -c indexes.c
 
 # Clean up created object files
 clean:
