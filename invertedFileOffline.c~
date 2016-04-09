@@ -140,7 +140,6 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
     
     // Read words from file based on the space deliminator
     while (buffer != NULL) {
-        printf("%d|%s|%s\n", metaTags, buffer, docId);
         if (strncmp(buffer, "$", 1) == 0) {
                 if (strcmp(buffer, "$DOC") == 0) {
                     metaTags = 1;
@@ -148,10 +147,12 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
                     // $TITLE or $BODY
                     metaTags++;
                 }
+                
         } else if (metaTags == 1) {
             // Load docid
             docId = strcpy(docId, buffer);
             docLine = lineNum;
+            
         } else if (metaTags > 1) {
             // Update the tree
             if ((*termTree) != NULL) {
@@ -225,6 +226,7 @@ int genDocid(FILE *fp, DocNode **docs) {
 /***
     Generates postings.txt. Contains the document's number, based off
         of its index in the docs array, and it's term frequency. Ordered by term.
+        Depth-First traversal of termTree
     <docno1> <term-frequency1>
     <docno2> <term-frequency2>
 ***/
@@ -233,7 +235,6 @@ int genPostings(FILE *fp, TreeNode *termTree, DocNode **docs) {
         return 0;
 
     int totalEntries = 0;
-    //Traverse depth-first and print nodes dictionary
     int retVal = 0;
     
     // Left Side Traversal
@@ -269,10 +270,10 @@ int genPostings(FILE *fp, TreeNode *termTree, DocNode **docs) {
 int main (int argc, char *argv[]){
     char *buffer = malloc(sizeof(char)*200);
     TreeNode *termTree = NULL;
-    DocNode (**docs) = malloc(sizeof(DocNode)*100000);
+    DocNode (**docs) = malloc(sizeof(DocNode)*999999);
     int numTerms = 0;
     
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; i < 999999; i++) {
         docs[i] = initDocNode("replace", -1);
     }
     // Command loop
@@ -335,7 +336,7 @@ int main (int argc, char *argv[]){
             
             //Generate Postings.txt
             fp = fopen("postings.txt", "w+");
-            fprintf(fp, "      \n");
+            fprintf(fp, "               \n");
             int numEntries = genPostings(fp, termTree, docs);
             fseek(fp, 0, SEEK_SET);
             fprintf(fp, "%.6d\n", numEntries);

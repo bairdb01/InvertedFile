@@ -28,6 +28,7 @@ User Guide:
                      inverted file
                      When in program enter:
                         1 : to generate the files
+                            enter filename: e.g. DataFiles/full.txt
                         2 : print off the dictionary alphabetically
                         3 : print off the documents.txt
                         q : quit
@@ -48,9 +49,13 @@ Limitations:
 Improvements:
     Implement a better sorting algorithm, currently use C's quicksort.
     Convert current unbalanced binary tree to on that is more balanced, AVL or B*.
+    Loading the full.txt(100mb) takes >30min, so improving that would be ideal
+        - included precompiled indexes
     
 Testing:
     Tested for all memory leaks and errors.
-    Tested using using many prints to verify intermediary outputs.
+    Tested using using many prints to verify intermediary steps.
+    Tested with different files of varying sizes.
     Unit tested all the supplmentary files, i.e. lists.c, trees.c, etc
-    
+    Tested most boundaries that I could think of
+    Check for most errors, except for null returns on malloc

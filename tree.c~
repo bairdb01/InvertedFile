@@ -145,7 +145,7 @@ int countTreeNodes (TreeNode *tree) {
     if (tree == NULL)
         return 0;
         
-    int numNodes = 0;
+    int numNodes = 1;
     int retVal = 0;
     // Left Side
     while (tree->left != NULL && retVal == 0)    
@@ -153,7 +153,6 @@ int countTreeNodes (TreeNode *tree) {
     numNodes += retVal;
     
     // Itself    
-    numNodes++;
     retVal = 0;
 
     // Right Side
@@ -162,6 +161,33 @@ int countTreeNodes (TreeNode *tree) {
     numNodes += retVal;
     return numNodes;
 }
+
+
+void swapRight (TreeNode *tree) {
+
+
+}
+
+void swapLeft(TreeNode *tree) {
+
+
+}
+
+void swapLeftRight(TreeNode *tree) {
+
+
+}
+
+void swapRightLeft(TreeNode *tree) {
+
+
+}
+
+void balance (TreeNode *tree) {
+
+}
+
+
 /*// Test*/
 /*int main () {*/
 /*    printf("Testing Begins\n");*/
