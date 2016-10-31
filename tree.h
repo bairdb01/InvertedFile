@@ -1,7 +1,7 @@
 /***
     Filename: tree.h
     Author: Benjamin Baird
-    Description: Header file for tree.c, a binary tree
+    Description: Header file for tree.c, a binary tree converted to AVL
 ***/
 
 #ifndef STDIO_H_INCLUDED
@@ -27,6 +27,7 @@
 
 typedef struct TreeNode {
     int freq;
+    int height;
     char *term;
     Node *dictionary;
     struct TreeNode *right;
@@ -54,7 +55,7 @@ void freeTreeNode (TreeNode *node);
     @return 1 : successful
     @return 0 : failure
 ***/
-int addTerm (TreeNode *tree, char *term, char *docId);
+TreeNode * addTerm (TreeNode *tree, char *term, char *docId);
 
 /***
     Prints a tree node including left and right terms
@@ -69,6 +70,11 @@ int printTreeNode (TreeNode *node);
 ***/
 int printTree (TreeNode *tree);
 
+/**
+    Prints the tree inorder, helpful to debug AVL tree
+**/
+int printInOrder(TreeNode *tree);
+
 /***
     Count the number of nodes in the tree
     @return >0 : number of nodes in the tree
@@ -81,3 +87,29 @@ int countTreeNodes (TreeNode *tree);
               NULL if not found
 ***/
 TreeNode *searchTree(TreeNode *tree, char *term);
+
+/**
+    Returns the height of a node
+**/
+int getHeight(TreeNode *node);
+
+/**
+    Checks if a node is balanced
+    @return > 1 left heavy, < -1 right heavy
+**/
+int getBalance(TreeNode *node);
+
+/**
+    Rotate a sub tree left
+**/
+TreeNode *rotateLeft(TreeNode *node);
+
+/**
+    Rotate a subtree right
+**/
+TreeNode *rotateRight(TreeNode *node);
+
+/**
+    Balances out a subtree
+**/
+TreeNode *selfBalance(TreeNode *node, char *term);

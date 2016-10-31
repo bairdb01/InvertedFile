@@ -19,58 +19,58 @@
 
 typedef struct DictIndex {
     char *term;
-    int df;
-    int postIndex;
+    long df;
+    long postIndex;
 }DictIndex;
 
 typedef struct PostIndex {
-    int docno;
-    int tf;
+    long docno;
+    long tf;
 }PostIndex;
 
 typedef struct {
     char *docid;
-    int line;
+    long line;
 }DocIndex;
 
 /***
     Initialize a DictIndex with term and df
     @return : pointer to DictIndex created
 ***/
-DictIndex initDictIndex(char *term, int df, int pIndex);
+DictIndex initDictIndex(char *term, long df, long pIndex);
 
 /***
     Initialize a PostIndex with docno and tf
     @return : pointer to PostIndex created
 ***/
-PostIndex initPostIndex(int docno, int tf);
+PostIndex initPostIndex(long docno, long tf);
 
 /***
     Initialize a DocIndex with docid and line
     @return : pointer to DocIndex created
 ***/
-DocIndex initDocIndex(char *docid, int line);
+DocIndex initDocIndex(char *docid, long line);
 
 /***
     Print the dictionary array
 ***/
-void printDictArray (DictIndex dIndex[], int dictSize);
+void printDictArray (DictIndex dIndex[], long dictSize);
 
 /***
     Free dictionary array's terms
 ***/
-void freeDictArray ( DictIndex dIndex[], int dictSize );
+void freeDictArray ( DictIndex dIndex[], long dictSize );
 
 /***
     Print the posting array
 ***/
-void printPostArray (PostIndex pIndex[], int pSize);
+void printPostArray (PostIndex pIndex[], long pSize);
 /***
     Print the doc array
 ***/
-void printDocArray (DocIndex dIndex[], int docSize);
+void printDocArray (DocIndex dIndex[], long docSize);
 
 /***
     Free doc array's terms
 ***/
-void freeDocArray ( DocIndex dIndex[], int docSize );
+void freeDocArray ( DocIndex dIndex[], long docSize );

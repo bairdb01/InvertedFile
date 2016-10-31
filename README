@@ -1,4 +1,4 @@
-Implementation of the Inverted File data structure in C using Binary Search Tree and Linked List. Two available modes: Online and offline.
+Implementation of the Inverted File data structure in C using AVL tree and Linked List. Two available modes: Online and offline.
 
 Offline: Build a database of keywords from the datafiles and create the dictionary, posting, and docids files.
 
@@ -8,23 +8,24 @@ Offline: Build a database of keywords from the datafiles and create the dictiona
                     <total number of terms>
                     <term1> <document-frequency1>
                     <term2> <document-frequency2>
-                      
+
                 - postings.txt: contains the document's id and it's term frequency
                     <total number of entries>
                     <docno1> <term-frequency1>
                     <docno2> <term-frequency2>
-                    
+
                 - docids.txt: docid's with their starting positions from the input file
                     <total number of documents>
                     <docid1> <start-position1>
                     <docid2> <start-position2>
 
 Online: Use the created files with a query to find relevant documents and return
-        their titles.
+        their titles by using the vector space model. Also, are able to view the
+	 document from the results.
 
 User Guide:
     make : to compile the program
-    ./bairdb_a4_off : Execute the offline program to process a file and generate 
+    ./bairdb_a4_off : Execute the offline program to process a file and generate
                      inverted file
                      When in program enter:
                         1 : to generate the files
@@ -42,20 +43,23 @@ User Guide:
                         q : return to main loop
     make reset : remove posting, dictionary, docindex files
     make clean : to remove any .o files and the online/offline files after compilation
-        
+
 Limitations:
     Can only load one file at a time.
-    
+    Query must be less than 500 characters long
+    Filename < 499 characters
+    Indexer for large files may take a while, even with AVL tree (25mb took ~7min)
+    Maximum number of terms/postings/docs is long_max
+
 Improvements:
     Implement a better sorting algorithm, currently use C's quicksort.
-    Convert current unbalanced binary tree to on that is more balanced, AVL or B*.
-    Loading the full.txt(100mb) takes >30min, so improving that would be ideal
-        - included precompiled indexes
-    
+
 Testing:
     Tested for all memory leaks and errors.
     Tested using using many prints to verify intermediary steps.
     Tested with different files of varying sizes.
-    Unit tested all the supplmentary files, i.e. lists.c, trees.c, etc
+    Unit tested all the supplementary files, i.e. lists.c, trees.c, etc
     Tested most boundaries that I could think of
     Check for most errors, except for null returns on malloc
+    Fixed bug which would allow invisible characters to be indexed
+    Fixed bug which caused results to be incorrect.

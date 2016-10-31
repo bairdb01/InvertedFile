@@ -11,17 +11,17 @@ Description: Implements the inverted file data structure to be used "Offline".
                     <total number of terms>
                     <term1> <document-frequency1>
                     <term2> <document-frequency2>
-                      
+
                 - postings.txt: contains the document's id and it's term frequency
                     <total number of entries>
                     <docno1> <term-frequency1>
                     <docno2> <term-frequency2>
-                    
+
                 - docids.txt: docid's with their starting positions from the input file
                     <total number of documents>
                     <docid1> <start-position1>
                     <docid2> <start-position2>
-Tested: 0 memory leaks or errors                    
+Tested: 0 memory leaks or errors
 */
 
 #ifndef STDIO_H_INCLUDED
@@ -83,11 +83,11 @@ void freeDocNode ( DocNode *node ) {
 int genDictionary ( FILE *fp, TreeNode *termTree ) {
     int retVal = 0;
     // Left Side
-    while (termTree->left != NULL && retVal == 0)    
+    while (termTree->left != NULL && retVal == 0)
         retVal = genDictionary(fp, termTree->left);
-    
+
     // Itself
-    int df = 0;  
+    int df = 0;
     Node *temp = termTree->dictionary;
     while (temp != NULL) {
         df++;
@@ -97,9 +97,9 @@ int genDictionary ( FILE *fp, TreeNode *termTree ) {
     retVal = 0;
 
     // Right Side
-    while (termTree->right != NULL && retVal == 0) 
+    while (termTree->right != NULL && retVal == 0)
         retVal = genDictionary(fp, termTree->right);
-    
+
     return 1;
 }
 
@@ -114,7 +114,7 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
     char *docId = malloc(sizeof(char)*200);
     int docCount = 0;
     int docLine = 0;
-    
+
     // Load file to process
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -122,7 +122,7 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
         return -1;
     }
     int lineNum = 0;
-    
+
     // Grab the first word in the file
     char *buffer = malloc(sizeof(char)*200);
     char letter [2] = "\0\0";
@@ -137,7 +137,7 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
         buffer = strcat(buffer, letter);
         letter[0] = fgetc(fp);
     }
-    
+
     // Read words from file based on the space deliminator
     while (buffer != NULL) {
         if (strncmp(buffer, "$", 1) == 0) {
@@ -147,26 +147,22 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
                     // $TITLE or $BODY
                     metaTags++;
                 }
-                
+
         } else if (metaTags == 1) {
             // Load docid
             docId = strcpy(docId, buffer);
             docLine = lineNum;
-            
+
         } else if (metaTags > 1) {
             // Update the tree
-            if ((*termTree) != NULL) {
-                if (addTerm ((*termTree), buffer, docId) == 0) {
-                    // Error adding term
-                    free(buffer);
-                    free(docId);
-                    fclose(fp);
-                    return -1;
+            if (strlen(buffer) >= 1 && strncmp(buffer, "0",1) > 0){
+                if ((*termTree) != NULL ) {
+                    (*termTree) = addTerm ((*termTree), buffer, docId);
+                } else {
+                    (*termTree) = initTreeNode(buffer, docId);
                 }
-            } else {
-                (*termTree) = initTreeNode(buffer, docId);
             }
-            
+
             // Making sure document is not empty
             if (metaTags == 2) {
                 freeDocNode(docs[docCount]); // Free the temp node
@@ -176,11 +172,11 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
             }
             numTerms++;
         }
-        
+
         // Found a newline
-        if (letter[0] == '\n') 
+        if (letter[0] == '\n')
             lineNum++;
-            
+
         // Grab next word
         buffer = strcpy(buffer,"\0");
         letter[0] = fgetc(fp);
@@ -193,9 +189,9 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
             buffer = strcat(buffer, letter);
             letter[0] = fgetc(fp);
         }
-        
+
     }
-    
+
     fclose(fp);
     free(docId);
     return numTerms;
@@ -211,7 +207,7 @@ int processDocs(TreeNode **termTree, DocNode **docs, char *filename){
 int genDocid(FILE *fp, DocNode **docs) {
     int numDocs = 0;
     fprintf(fp,"      \n");
-    
+
     for (int i = 0; i < 100000; i++) {
         if (docs[i]->start != -1) {
             fprintf(fp, "%s %d\n", docs[i]->docId, docs[i]->start);
@@ -236,18 +232,18 @@ int genPostings(FILE *fp, TreeNode *termTree, DocNode **docs) {
 
     int totalEntries = 0;
     int retVal = 0;
-    
+
     // Left Side Traversal
-    while (termTree->left != NULL && retVal == 0) {  
+    while (termTree->left != NULL && retVal == 0) {
         retVal = genPostings(fp, termTree->left, docs);
     }
     totalEntries += retVal;
-    
-    // Print the node's dictionary
+
+    // Print the node's posting
     Node *node = termTree->dictionary;
     while (node != NULL) {
         int index = 0;
-        for (index = 0; index < 100000; index++) {
+        for (index = 0; index < 10000000; index++) {
             if (strcmp(docs[index]->docId, node->docId) == 0)
                 break;
         }
@@ -255,7 +251,7 @@ int genPostings(FILE *fp, TreeNode *termTree, DocNode **docs) {
         totalEntries++;
         node = node->next;
     }
-    
+
     retVal = 0;
 
     // Right Side Traversal
@@ -264,7 +260,7 @@ int genPostings(FILE *fp, TreeNode *termTree, DocNode **docs) {
     }
     totalEntries += retVal;
 
-    return totalEntries;    
+    return totalEntries;
 }
 
 int main (int argc, char *argv[]){
@@ -272,7 +268,7 @@ int main (int argc, char *argv[]){
     TreeNode *termTree = NULL;
     DocNode (**docs) = malloc(sizeof(DocNode)*999999);
     int numTerms = 0;
-    
+
     for (int i = 0; i < 999999; i++) {
         docs[i] = initDocNode("replace", -1);
     }
@@ -292,34 +288,34 @@ int main (int argc, char *argv[]){
             free(docs);
             return 1;
         }
-        
+
         if (strcmp(buffer, "q") == 0){
             break;
-            
+
         } else if (strcmp(buffer, "2") == 0) {
             if (termTree == NULL) {
                 printf("Tree is empty\n");
                 continue;
             }
             printTree(termTree);
-            
+
         } else if (strcmp(buffer, "3") == 0) {
             for (int i = 0; i < 100000; i++) {
                 if (docs[i]->start != -1)
                     printf("DocNo: %s | LineNumber: %d\n", docs[i]->docId, docs[i]->start);
             }
             continue;
-            
+
         } else if (strcmp(buffer, "1") == 0){
             printf("Enter the filename of file to process...\n");
             char *filename = malloc(sizeof(char)*500);
             if (scanf("%s", filename) == 0) {
                 free(filename);
-                free(buffer); 
+                free(buffer);
                 for (int i = 100000-1; i >= 0; i--) {
                     freeDocNode(docs[i]);
                 }
-                free(docs);  
+                free(docs);
             }
             numTerms = processDocs(&termTree, docs, filename);
             free(filename);
@@ -327,13 +323,13 @@ int main (int argc, char *argv[]){
                 printf("Error processing files.\n");
                 return 1;
             }
-            
+
             // Generate dictionary.txt
             FILE *fp = fopen("dictionary.txt", "w+");
             fprintf(fp, "%d\n", countTreeNodes(termTree));
             genDictionary( fp, termTree );
             fclose(fp);
-            
+
             //Generate Postings.txt
             fp = fopen("postings.txt", "w+");
             fprintf(fp, "               \n");
@@ -341,15 +337,15 @@ int main (int argc, char *argv[]){
             fseek(fp, 0, SEEK_SET);
             fprintf(fp, "%.15d\n", numEntries);
             fclose(fp);
-                
+
             //Generate DocIds.txt
             fp= fopen("docids.txt","w+");
             genDocid(fp, docs);
             fclose(fp);
-            
+
         }
     }
-    
+
     free(buffer);
     if (termTree != NULL)
         freeTree(termTree);

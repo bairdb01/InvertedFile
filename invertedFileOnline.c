@@ -3,18 +3,18 @@ Filename: invertedFileOnline.c
 Author: Benjamin Baird
 Date Created: April 2, 2016
 Last Updated: April 8, 2016
-Description: Loads the 3 files created during the "online" mode into memory and 
+Description: Loads the 3 files created during the "online" mode %ldo memory and
              allows user to search for relevant documents given a query.
                 - dictionary.txt
                     <total number of terms>
                     <term1> <document-frequency1>
                     <term2> <document-frequency2>
-                      
+
                 - postings.txt
                     <total number of entries>
                     <docno1> <term-frequency1>
                     <docno2> <term-frequency2>
-                    
+
                 - docids.txt
                     <total number of documents>
                     <docid1> <start-position1>
@@ -64,20 +64,20 @@ int cmp (const void *pa, const void *pb) {
 /***
     Multiply two vectors of the same length
 ***/
-double dotProduct (double vOne[], double vTwo[], int size) {
+double dotProduct (double vOne[], double vTwo[], long size) {
     double product = 0;
 
-    for (int i = 0; i < size; i++) {
-        product += vOne[i] * vTwo[i];  
+    for (long i = 0; i < size; i++) {
+        product += vOne[i] * vTwo[i];
     }
-    
+
     return product;
 }
 
 /***
-    Normalize/find magitude of same length vectors
+    Normalize/find magnitude of same length vectors
 ***/
-double normalize (double vectorOne[], double vectorTwo[], int size) {
+double normalize (double vectorOne[], double vectorTwo[], long size) {
     double result = dotProduct(vectorOne, vectorTwo, size);
     result = sqrt(result);
     return result;
@@ -89,7 +89,7 @@ double normalize (double vectorOne[], double vectorTwo[], int size) {
                     closer to 0 = appears a lot
                     closer to infinity appears little if at all
 ***/
-double tfidf (double tf, int totalDocs, int df) {
+double tfidf (double tf, long totalDocs, long df) {
     if (df == 0)
         return 10000;
     return ((double)tf * log2((double)totalDocs/(double)df));
@@ -100,13 +100,13 @@ double tfidf (double tf, int totalDocs, int df) {
     @return >=0 : index of term in the dictionary
     @return -1 : term not found
 ***/
-int searchIndex ( DictIndex index[], int length, char *term) {
-    int middle = (int)(length/2);
-    int max = length;    
-    int min = 0;
+long searchIndex ( DictIndex index[], long length, char *term) {
+    long middle = (long)(length/2);
+    long max = length;
+    long min = 0;
 
     while (1) {
-        int cmp = strcmp(term, index[middle].term);
+        long cmp = strcasecmp(term, index[middle].term);
         if (cmp == 0) {
             return middle;
         } else if ( min == max || (min == middle && max == middle)) {
@@ -123,7 +123,7 @@ int searchIndex ( DictIndex index[], int length, char *term) {
             middle = (max +middle)/2 + 1;
         }
     }
-    
+
     return -1;
 }
 
@@ -132,19 +132,19 @@ int searchIndex ( DictIndex index[], int length, char *term) {
     Perform a weighted retrieval of relevant documents
     @return : array of relevant documents, with corresponding weights and ranking
 ***/
-double **retrieveResults (char *query, double docTermVector[], DictIndex dictIndex[], PostIndex postIndex[], 
-                    DocIndex docIndex[], int dictSize, int postSize, int numDocs) {
+double **retrieveResults (char *query, double docTermVector[], DictIndex dictIndex[], PostIndex postIndex[],
+                    DocIndex docIndex[], long dictSize, long postSize, long numDocs) {
 
     // Calculate weighted vector of query
-    double *queryVector = malloc(sizeof(double)*(int)strlen(query));
+    double *queryVector = malloc(sizeof(double)*(long)strlen(query));
     char *buffer;
     char *delims = " \n";
-    char *token = malloc(sizeof(char)*(int)strlen(query)+1);
-    int queryCounter = 0;
-    char *uniqueTokens = malloc(sizeof(char)*(int)strlen(query)+1);
+    char *token = malloc(sizeof(char)*(long)strlen(query)+1);
+    long queryCounter = 0;
+    char *uniqueTokens = malloc(sizeof(char)*(long)strlen(query)+1);
     uniqueTokens = strcpy(uniqueTokens, "\0");
     double maxTf = 0;
-    
+
     // Count the most frequent word and remove duplicates
     token = strcpy(token, query);
     buffer = strtok(token, delims);
@@ -159,7 +159,7 @@ double **retrieveResults (char *query, double docTermVector[], DictIndex dictInd
             temp++;
             temp = strstr(temp, buffer);
         }
-        
+
         char *tmp2 = strstr(uniqueTokens, buffer);
         if ( tmp2 == NULL) {
             uniqueTokens = strcat(uniqueTokens, buffer);
@@ -167,7 +167,7 @@ double **retrieveResults (char *query, double docTermVector[], DictIndex dictInd
             queryVector[queryCounter] = tf;
             queryCounter++;
         }
-        
+
         if (tf > maxTf)
             maxTf = tf;
         buffer = strtok(NULL, delims);
@@ -177,75 +177,76 @@ double **retrieveResults (char *query, double docTermVector[], DictIndex dictInd
     buffer = strtok(token, delims);
 
     // Go through all the words for the query
-    for (int i = 0; i < queryCounter; i++) {
-        int result = searchIndex( dictIndex, dictSize - 1, buffer); 
-        
+    for (long i = 0; i < queryCounter; i++) {
+        long result = searchIndex( dictIndex, dictSize - 1, buffer);
         // Assign vector weights
         if (result >= 0) {
-            queryVector[i] =  tfidf (queryVector[i]/maxTf, numDocs, dictIndex[result].df);
+            queryVector[i] =  tfidf(queryVector[i]/maxTf, numDocs, dictIndex[result].df);
         } else {
             queryVector[i] = 0;
         }
+
         buffer = strtok(NULL, delims);
     }
-        
+
     queryVector = realloc(queryVector, sizeof(double)*queryCounter);
     token = strcpy(token, uniqueTokens);
-    
+
     // Calculate the weighted vectors of each document
     double docMatrix[numDocs];
-    
+
     buffer = strtok(token, delims);
-    
+
     // Initialize vectors with 0 (Better way?)
-    for (int i = 0; i < numDocs; i++) 
+    for (long i = 0; i < numDocs; i++)
         docMatrix[i] = 0;
 
     // Calculate document vectors
-    for (int i = 0; i < queryCounter; i++) {
-        int result = searchIndex( dictIndex, dictSize - 1, buffer); 
+    for (long i = 0; i < queryCounter; i++) {
+        long result = searchIndex( dictIndex, dictSize - 1, buffer);
+
         // Check if the query word exists in a document
         if (result >= 0) {
-            int df = dictIndex[result].df;
-            int pindice = dictIndex[result].postIndex;
-            
-            // Loop through all docnos word appears in
-            for (int k = pindice; (k < pindice + df) ; k++) {
-                    //Locate word in dictionary and calculate it's cumulative dot product
-                    double tfidfResult = tfidf((double)postIndex[k].tf, numDocs, df);
-                    docMatrix[postIndex[k].docno] +=  tfidfResult * queryVector[i];
+            long df = dictIndex[result].df;
+            long pindice = dictIndex[result].postIndex;
+
+            // Loop through all docs that the word appears in
+            for (long k = pindice; (k < pindice + df) ; k++) {
+                //Locate word in dictionary and calculate it's cumulative dot product
+                double tfidfResult = tfidf((double)postIndex[k].tf, numDocs, df);
+                docMatrix[postIndex[k].docno] +=  tfidfResult * queryVector[i];
             }
         }
         buffer = strtok(NULL, delims);
     }
-    
-    // Cosine the vectors to get weighted results
-    double queryMagn = normalize(queryVector, queryVector, queryCounter);
 
-    for (int i = 0; i < numDocs; i++) {
+    // Cosine similarity of the vectors to get weighted results
+    double queryMagn = normalize(queryVector, queryVector, queryCounter);
+    for (long i = 0; i < numDocs; i++) {
         double denominator = docTermVector[i] * queryMagn;
         if (denominator == 0)
             docMatrix[i] = 0;   // No term(s)
         else
             docMatrix[i] /= denominator;
     }
-    
+
     // Sort the results and flag the first one without any match
     double **sorted = malloc(sizeof(double**)*numDocs);
-    for (int i = 0; i < numDocs; i++) {
+    for (long i = 0; i < numDocs; i++) {
         sorted[i] = malloc(sizeof(double*)*2);
         sorted[i][0] = i;
         sorted[i][1] = docMatrix[i];
     }
-    
+
     qsort( sorted, numDocs, sizeof(double*), cmp );
-    
-    for (int i = 0; i < numDocs; i++) {
+
+    for (long i = 0; i < numDocs; i++) {
         if (sorted[i][1] == 0.0) {
             sorted[i][1] = -1.0;
+            break;
         }
     }
-    
+
     free(uniqueTokens);
     free(queryVector);
 /*    free(buffer);*/
@@ -253,17 +254,15 @@ double **retrieveResults (char *query, double docTermVector[], DictIndex dictInd
     return sorted;
 }
 
-
-
 /***
     Grabs the title from the datafile
 ***/
-char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
+char *getTitle(long docno, DocIndex docIndex[], long numDocs, char *filename) {
     char *title = malloc(sizeof(char)*2000);
     title = strcpy (title, "\0");
     char *docId = malloc(sizeof(char)*200);
     char letter [2] = "\0\0";
-    
+
     // Loop through the files
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -272,15 +271,15 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
         return NULL;
     }
 
-    // Navigate to document's starting line        
+    // Navigate to document's starting line
     letter[0] = fgetc(fp);
-    int counter = 0;
+    long counter = 0;
     while (letter[0] != EOF && counter < docIndex[docno].line) {
         if (letter[0] == '\n')
             counter++;
         letter[0] = fgetc(fp);
     }
-    
+
     // Grab the first word in the file
     char *buffer = malloc(sizeof(char)*200);
     buffer = strcpy(buffer,letter);
@@ -295,7 +294,7 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
         letter[0] = fgetc(fp);
     }
 
-    int docFound = 0;
+    long docFound = 0;
     // Read words from file based on the space deliminator
     while (buffer != NULL) {
         if (strncmp(buffer, "$", 1) == 0) {
@@ -307,11 +306,11 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
                     buffer = strcat(buffer, letter);
                     letter[0] = fgetc(fp);
                 }
-                if (strcmp(docIndex[docno].docid, buffer) != 0) {
+                if (strcasecmp(docIndex[docno].docid, buffer) != 0) {
                     break;
                 }
                 docFound = 1;
-                
+
             } else if (strcmp(buffer, "$TITLE") == 0) {
                 // Grab the title
                 letter[0] = fgetc(fp);
@@ -326,15 +325,15 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
                 return title;
             } else {
                 if (docFound) {
-                    title = strcpy(title, "<No Title>\0");
+                    title = strcpy(title, "<No Title>\n\0");
                     free(buffer);
                     free(docId);
                     fclose(fp);
                     return title;
                 }
             }
-        } 
-        
+        }
+
         // Grab next word
         buffer = strcpy(buffer,"\0");
         letter[0] = fgetc(fp);
@@ -349,7 +348,7 @@ char *getTitle(int docno, DocIndex docIndex[], int numDocs, char *filename) {
         }
     }
     fclose(fp);
-    
+
     free(docId);
     return title;
 }
@@ -361,20 +360,20 @@ int main (int argc, char * argv[]){
     if (dictionary == NULL) {
         printf("Error loading dictionary.txt");
         return 1;
-    }    
-    int dictSize = 0;
-    int ret = fscanf(dictionary, "%d", &dictSize);
+    }
+    long dictSize = 0;
+    long ret = fscanf(dictionary, "%ld", &dictSize);
     if ( ret == 0 ){
         fclose(dictionary);
         return 1;
     }
-    int cur = 0;
-    
+    long cur = 0;
+
     DictIndex *dictIndex = malloc(sizeof(DictIndex)*dictSize);
     char *term = malloc(sizeof(char)*200);
-    for (int i = 0; i < dictSize; i++) {
-        int df = 0;
-        ret = fscanf( dictionary, "%s %d\n", term, &df); 
+    for (long i = 0; i < dictSize; i++) {
+        long df = 0;
+        ret = fscanf( dictionary, "%s %ld\n", term, &df);
         if (ret == 0) {
             fclose(dictionary);
             free(term);
@@ -393,18 +392,18 @@ int main (int argc, char * argv[]){
         printf("Error loading docids.txt");
         return 1;
     }
-    int numDocs = 0;
-    ret = fscanf(docfp, "%d", &numDocs);
+    long numDocs = 0;
+    ret = fscanf(docfp, "%ld", &numDocs);
     if (ret == 0) {
         fclose(docfp);
         return 1;
     }
-    
-    DocIndex *docIndex = malloc(sizeof(DocIndex)*numDocs);    
-    for (int i = 0; i < numDocs; i++) {
-        int line = 0;
+
+    DocIndex *docIndex = malloc(sizeof(DocIndex)*numDocs);
+    for (long i = 0; i < numDocs; i++) {
+        long line = 0;
         char *docid = malloc(sizeof(char)*200);
-        ret = fscanf( docfp, "%s %d\n", docid, &line); 
+        ret = fscanf( docfp, "%s %ld\n", docid, &line);
         if (ret == 0) {
             free(docid);
             fclose(docfp);
@@ -414,42 +413,42 @@ int main (int argc, char * argv[]){
         }
         docIndex[i] = initDocIndex(docid, line);
         free(docid);
-    }  
+    }
     fclose(docfp);
-    
+
     // Store the number of words in each document
     double *docTermVector= malloc(sizeof(double) * numDocs);
-    for (int i = 0; i < numDocs; i++) {
+    for (long i = 0; i < numDocs; i++) {
         docTermVector[i] = 0;
     }
-    
-    // Load the posting file 
-    FILE *posting = fopen("postings.txt", "r");  
+
+    // Load the posting file
+    FILE *posting = fopen("postings.txt", "r");
     if (posting == NULL) {
         printf("Error loading postings.txt");
         free(dictIndex);
         free(docIndex);
         return 1;
-    }    
-    int postSize = 0;
-    ret = fscanf(posting, "%d", &postSize);
+    }
+    long postSize = 0;
+    ret = fscanf(posting, "%ld", &postSize);
     if (ret == 0) {
         fclose(posting);
         free(dictIndex);
         free(docIndex);
         return 1;
     }
-    PostIndex *postIndex = malloc(sizeof(PostIndex)*postSize);  
-    int index = 0;
-    int pIndex = dictIndex[0].postIndex + dictIndex[0].df - 1;
-    for (int i = 0; i < postSize; i++) {
+    PostIndex *postIndex = malloc(sizeof(PostIndex)*postSize);
+    long index = 0;
+    long pIndex = dictIndex[0].postIndex + dictIndex[0].df - 1;
+    for (long i = 0; i < postSize; i++) {
         if (i > pIndex) {
             index++;
             pIndex = dictIndex[index].postIndex + dictIndex[index].df - 1;
         }
-        int tf = 0;
-        int docno = 0;
-        ret = fscanf( posting, "%d %d\n", &docno, &tf); 
+        long tf = 0;
+        long docno = 0;
+        ret = fscanf( posting, "%ld %ld\n", &docno, &tf);
         if (ret == 0) {
             fclose(posting);
             free(dictIndex);
@@ -458,12 +457,13 @@ int main (int argc, char * argv[]){
         }
         postIndex[i] = initPostIndex(docno, tf);
         docTermVector[docno] += pow(tfidf((double)tf, (double)numDocs, (double)dictIndex[index].df), 2);
-    }   
+    }
     fclose(posting);
-    
-    for (int i = 0; i < numDocs; i++) { 
+
+    for (long i = 0; i < numDocs; i++) {
         docTermVector[i] = sqrt(docTermVector[i]);
     }
+
     char *filename = malloc(sizeof(char)*500);
     printf("~~~~ Welcome to the Boogle file search engine ~~~~\n");
     printf("Enter the filename to search through: \n");
@@ -479,57 +479,119 @@ int main (int argc, char * argv[]){
         free(postIndex);
         return 1;
     }
-    printf("str: %d\n", (int)strlen(filename));
+
     filename[strlen(filename)-1] = '\0';  // Remove newline
-    
+    FILE *test = fopen(filename, "r");
+    if (test == NULL){
+        printf("Invalid file name/path\n");
+        free(filename);
+        free(docTermVector);
+        freeDictArray(dictIndex, dictSize);
+        freeDocArray(docIndex, numDocs);
+
+        free(dictIndex);
+        free(docIndex);
+        free(postIndex);
+        return 1;
+    }
+    fclose(test);
+
     // Command Loop
     while (1) {
         char *input = malloc(sizeof(char)*500);
-        printf("Please enter a query. Seperate each keyword by a space. q to quit:\n");    
+        printf("Please enter a query. Seperate each keyword by a space. q to quit:\n");
         input = fgets(input, 500, stdin);
-        if (strcmp(input, "q\n") == 0) {
+        if (strcasecmp(input, "q\n") == 0) {
             free(input);
             break;
         } else {
             double **results = retrieveResults(input, docTermVector, dictIndex, \
                                     postIndex, docIndex, dictSize, postSize, numDocs);
-            int index = 0;
-            while (strcmp(input, "q\n") != 0) {
+            long index = 0;
+            long allDocsFound = 0;
+            while (strcasecmp(input, "q\n") != 0) {
                 printf("------------------------\n");
                 printf("Results for query:\n");
-                for (int i = index; i <= index + 10 && i < numDocs; i++) {
+                long i = index;
+
+                for (i = index; i < index + 10 && i < numDocs; i++) {
                     if (results[i][1] != -1.0) {
                         char *title = getTitle(results[i][0], docIndex, numDocs, filename);
-                        printf("Result %d: %s\n", i, title);
+                        if (strcmp(title, "") != 0)
+                            printf("Result %ld: %s", (i+1), title);
                         free(title);
                     } else {
+                        allDocsFound = 1;
                         break;
                     }
+                }
+
+                if (i == 0 && allDocsFound == 1) {
+                    printf("No documents found\n");
+                    printf("Try another query\n");
+                    break;
                 }
                 printf("------------------------\n");
                 printf("Enter 'q' to enter a new query.\n");
                 printf("Enter 'a' to view previous 10 results\n");
                 printf("Enter 'd' to view next 10 results\n");
-                input = fgets(input, 4, stdin);
-                if (strcmp(input, "a\n") == 0)
+                printf("Enter a result # to view the document\n");
+
+                input = fgets(input, 500, stdin);
+                if (strcasecmp(input, "d\n") == 0) {
                     index += 10;
-                    if (index > numDocs)
+                    if (allDocsFound) {
+                        allDocsFound = 0;
                         index -= 10;
-                else if (strcmp(input, "d\n") == 0) {
+                    }
+
+                } else if (strcasecmp(input, "a\n") == 0) {
                     index -= 10;
                     if (index < 0)
                         index = 0;
+                } else {
+                    // Is it a number?
+                    char *endptr;
+                    int choice = strtol( input, &endptr,10);
+                    if (choice > 0) {
+                        long docNo = (long)results[index+choice-1][0];
+                        FILE *doc = fopen(filename, "r");
+                        char * str = malloc(sizeof(char)*501);
+                        size_t *size = malloc(sizeof(size_t));
+                        *size = 501;
+                        int docCount = 0;
+
+                        for (long i = 0; i < docIndex[docNo].line; i++) {
+                            getline(&str, size, doc);
+                        }
+
+                        while ((str = fgets(str, 500, doc)) != NULL) {
+                            if (strncmp(str,"$DOC",4)==0) {
+                                docCount++;
+                            }
+                            if (docCount == 2) {
+                                break;
+                            }
+                            printf("%s", str);
+                        }
+                        free(str);
+                        free(size);
+                        fclose(doc);
+                        printf("Press any key to return to results...\n");
+                        fgets(input, 499, stdin);
+                        continue;
+                    }
                 }
             }
-            
-            for (int i = 0; i < numDocs; i++) {
+
+            for (long i = 0; i < numDocs; i++) {
                 free(results[i]);
             }
             free(results);
         }
         free(input);
     }
-    
+
     free(filename);
     free(docTermVector);
     freeDictArray(dictIndex, dictSize);
